@@ -56,6 +56,16 @@
 - [ ] API versioning approach determined
 - [ ] Backward compatibility strategy established
 
+**Frontend Development Compliance**:
+- [ ] Atomic Design methodology planned (Atoms → Molecules → Organisms → Templates → Pages)
+- [ ] Component architecture designed for reusability and composability
+- [ ] Design system and styling patterns established
+- [ ] Data flow architecture planned (child → parent component communication)
+- [ ] State management strategy with intelligent caching defined
+- [ ] Authentication via HTTP-only cookies implemented
+- [ ] HTTPS and security headers configured
+- [ ] Frontend performance targets set (FCP <1.5s, LCP <2.5s, CLS <0.1, FID <100ms)
+
 **Development Standards**:
 - [ ] TDD approach defined for all functions
 - [ ] Test coverage target set (minimum 90%)

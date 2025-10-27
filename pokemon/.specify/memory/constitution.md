@@ -1,8 +1,8 @@
 <!--
 Sync Impact Report:
-Version change: 1.0.0 → 1.1.0
+Version change: 1.1.0 → 1.2.0
 Modified principles: None (existing principles maintained)
-Added sections: API Contract Standards, Request Sanitization & Validation
+Added sections: Frontend Development Standards, Frontend Security, Frontend Performance Requirements
 Removed sections: None
 Templates requiring updates: ⚠ pending - plan-template.md, spec-template.md, tasks-template.md
 Follow-up TODOs: None
@@ -39,6 +39,18 @@ All APIs MUST follow consistent request/response format contracts. Every endpoin
 ### IX. Request Sanitization (MANDATORY)
 Every incoming request MUST be sanitized before processing. Input validation MUST reject malformed, malicious, or unexpected data. All user inputs MUST be escaped, trimmed, and validated against strict schemas. No raw user input MUST reach business logic without sanitization.
 
+### X. Atomic Design for Frontend
+Frontend components MUST follow Atomic Design methodology with Atoms, Molecules, Organisms, Templates, and Pages hierarchy. Components MUST be reusable, composable, and maintain single responsibility. Design system MUST be consistent across all UI elements with standardized props and styling patterns.
+
+### XI. Secure Frontend-Backend Communication
+All frontend-backend communication MUST use HTTPS with proper SSL/TLS certificates. Authentication tokens MUST be stored securely in HTTP-only cookies. API calls MUST include proper CORS configuration and security headers. Sensitive data MUST never be exposed in client-side code or local storage.
+
+### XII. Data Flow Architecture
+Data fetching MUST be centralized in smaller, focused components that communicate with backend APIs. Data MUST flow unidirectionally from child components to parent components. State management MUST be intelligent with appropriate caching strategies. Parent components MUST orchestrate data flow and state updates.
+
+### XIII. Performance-First Frontend
+Frontend applications MUST load fast with optimized bundle sizes and lazy loading. Critical rendering path MUST be optimized for first contentful paint under 1.5 seconds. Images and assets MUST be optimized and served via CDN. State management MUST use intelligent caching to minimize API calls and improve user experience.
+
 ## Architecture Standards
 
 ### Module Organization
@@ -60,6 +72,15 @@ Every incoming request MUST be sanitized before processing. Input validation MUS
 - API versioning MUST be implemented via URL path (e.g., /api/v1/) or headers
 - OpenAPI/Swagger documentation MUST be auto-generated and kept up-to-date
 - Contract changes MUST maintain backward compatibility for at least one major version
+
+### Frontend Development Standards
+- Components MUST follow Atomic Design hierarchy (Atoms → Molecules → Organisms → Templates → Pages)
+- All components MUST be reusable, composable, and maintain single responsibility
+- Design system MUST provide consistent styling patterns and standardized props
+- State management MUST use intelligent caching strategies to minimize API calls
+- Data flow MUST be unidirectional from child components to parent components
+- Authentication MUST be handled via secure HTTP-only cookies
+- All frontend-backend communication MUST use HTTPS with proper security headers
 
 ## Security Requirements
 
@@ -85,6 +106,14 @@ Every incoming request MUST be sanitized before processing. Input validation MUS
 - Database connections MUST use secure protocols
 - API keys and secrets MUST never be hardcoded
 
+### Frontend Security
+- Authentication tokens MUST be stored in HTTP-only, secure, same-site cookies
+- All frontend-backend communication MUST use HTTPS with valid SSL certificates
+- CORS policies MUST be properly configured for secure cross-origin requests
+- Sensitive data MUST never be stored in localStorage, sessionStorage, or client-side code
+- XSS protection MUST be implemented through proper input sanitization and CSP headers
+- CSRF protection MUST be implemented for all state-changing operations
+
 ## Performance Standards
 
 ### Response Time Requirements
@@ -93,10 +122,21 @@ Every incoming request MUST be sanitized before processing. Input validation MUS
 - Database queries MUST be optimized and indexed
 - Caching MUST be implemented for frequently accessed data
 
+### Frontend Performance Requirements
+- First Contentful Paint (FCP) MUST be under 1.5 seconds
+- Largest Contentful Paint (LCP) MUST be under 2.5 seconds
+- Cumulative Layout Shift (CLS) MUST be under 0.1
+- First Input Delay (FID) MUST be under 100ms
+- Bundle size MUST be optimized with code splitting and lazy loading
+- Images and assets MUST be optimized and served via CDN
+- State management MUST use intelligent caching to minimize API calls
+
 ### Monitoring
 - Performance metrics MUST be collected and monitored
 - Slow queries MUST be identified and optimized
 - System resources MUST be monitored and optimized
+- Frontend performance metrics MUST be tracked and reported
+- User experience metrics MUST be monitored and optimized
 
 ## Development Workflow
 
@@ -123,4 +163,4 @@ This constitution supersedes all other development practices and guidelines. All
 
 All pull requests and code reviews MUST verify compliance with these principles. Complexity MUST be justified and documented. Any deviation from these principles requires explicit approval and documentation.
 
-**Version**: 1.1.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-27
+**Version**: 1.2.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-27

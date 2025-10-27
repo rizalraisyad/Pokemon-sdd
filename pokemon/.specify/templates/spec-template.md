@@ -112,6 +112,17 @@
 - **API-007**: Input validation MUST reject malformed, malicious, or unexpected data
 - **API-008**: Contract changes MUST maintain backward compatibility
 
+### Frontend Development Requirements
+
+- **FE-001**: Components MUST follow Atomic Design hierarchy (Atoms → Molecules → Organisms → Templates → Pages)
+- **FE-002**: All components MUST be reusable, composable, and maintain single responsibility
+- **FE-003**: Design system MUST provide consistent styling patterns and standardized props
+- **FE-004**: Data flow MUST be unidirectional from child components to parent components
+- **FE-005**: State management MUST use intelligent caching strategies to minimize API calls
+- **FE-006**: Authentication MUST be handled via secure HTTP-only cookies
+- **FE-007**: All frontend-backend communication MUST use HTTPS with proper security headers
+- **FE-008**: Frontend performance MUST meet Core Web Vitals (FCP <1.5s, LCP <2.5s, CLS <0.1, FID <100ms)
+
 *Example of marking unclear requirements:*
 
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
