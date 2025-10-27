@@ -72,6 +72,13 @@
 - [ ] Code review process established
 - [ ] Static analysis and security scanning configured
 
+**Test Organization Compliance**:
+- [ ] Unit test co-location strategy defined (tests next to source files)
+- [ ] E2E test directory structure planned (centralized tests/e2e/)
+- [ ] Integration test organization planned (tests/integration/)
+- [ ] Test naming conventions established (.test.ts, .spec.ts)
+- [ ] Test file discoverability and maintainability ensured
+
 ## Project Structure
 
 ### Documentation (this feature)
