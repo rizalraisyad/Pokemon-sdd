@@ -149,6 +149,14 @@ const useHealthCheck = () => {
 
 ## Testing
 
+### Test Organization
+
+The project follows constitution-mandated test organization:
+
+- **Unit Tests**: Co-located with source files (e.g., `Button.tsx` → `Button.test.tsx`)
+- **Integration Tests**: Centralized in `tests/integration/` directory
+- **E2E Tests**: Centralized in `tests/e2e/` directory
+
 ### Run All Tests
 
 ```bash
@@ -157,6 +165,10 @@ docker-compose exec backend npm test
 
 # Frontend tests
 docker-compose exec frontend npm test
+
+# Integration tests
+docker-compose exec backend npm run test:integration
+docker-compose exec frontend npm run test:integration
 
 # E2E tests
 docker-compose exec frontend npm run test:e2e
@@ -167,6 +179,22 @@ docker-compose exec frontend npm run test:e2e
 - Backend: Jest + Supertest (90%+ coverage)
 - Frontend: Jest + React Testing Library (90%+ coverage)
 - E2E: Playwright for full user flows
+
+### Test File Examples
+
+```bash
+# Unit tests (co-located)
+src/components/Button/Button.tsx
+src/components/Button/Button.test.tsx
+
+# Integration tests (centralized)
+tests/integration/api.integration.test.ts
+tests/integration/auth.integration.test.ts
+
+# E2E tests (centralized)
+tests/e2e/user-flow.e2e.test.ts
+tests/e2e/auth-flow.e2e.test.ts
+```
 
 ## Troubleshooting
 

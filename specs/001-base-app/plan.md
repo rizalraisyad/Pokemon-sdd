@@ -72,6 +72,13 @@ Create a complete full-stack application with NestJS backend and React frontend 
 - [x] Code review process established
 - [x] Static analysis and security scanning configured
 
+**Test Organization Compliance**:
+- [x] Unit test co-location strategy defined (tests next to source files)
+- [x] E2E test directory structure planned (centralized tests/e2e/)
+- [x] Integration test organization planned (tests/integration/)
+- [x] Test naming conventions established (.test.ts, .spec.ts)
+- [x] Test file discoverability and maintainability ensured
+
 ## Project Structure
 
 ### Documentation (this feature)
@@ -93,29 +100,62 @@ backend/
 ├── src/
 │   ├── domain/              # Domain layer (entities, value objects, business logic)
 │   │   ├── entities/
+│   │   │   ├── user.entity.ts
+│   │   │   └── user.entity.test.ts        # Unit test co-located
 │   │   ├── value-objects/
+│   │   │   ├── email.vo.ts
+│   │   │   └── email.vo.test.ts           # Unit test co-located
 │   │   └── repositories/
+│   │       ├── user.repository.ts
+│   │       └── user.repository.test.ts    # Unit test co-located
 │   ├── application/         # Application layer (use cases, services)
 │   │   ├── use-cases/
+│   │   │   ├── create-user.usecase.ts
+│   │   │   └── create-user.usecase.test.ts # Unit test co-located
 │   │   ├── services/
+│   │   │   ├── user.service.ts
+│   │   │   └── user.service.test.ts       # Unit test co-located
 │   │   └── dto/
+│   │       ├── create-user.dto.ts
+│   │       └── create-user.dto.test.ts    # Unit test co-located
 │   ├── infrastructure/      # Infrastructure layer (external concerns)
 │   │   ├── database/
+│   │   │   ├── user.repository.impl.ts
+│   │   │   └── user.repository.impl.test.ts # Unit test co-located
 │   │   ├── external-apis/
+│   │   │   ├── email.service.ts
+│   │   │   └── email.service.test.ts      # Unit test co-located
 │   │   └── config/
+│   │       ├── app.config.ts
+│   │       └── app.config.test.ts         # Unit test co-located
 │   ├── presentation/        # Presentation layer (controllers, middleware)
 │   │   ├── controllers/
+│   │   │   ├── user.controller.ts
+│   │   │   └── user.controller.test.ts    # Unit test co-located
 │   │   ├── middleware/
+│   │   │   ├── auth.middleware.ts
+│   │   │   └── auth.middleware.test.ts    # Unit test co-located
 │   │   └── pipes/
+│   │       ├── validation.pipe.ts
+│   │       └── validation.pipe.test.ts    # Unit test co-located
 │   ├── shared/              # Shared utilities
 │   │   ├── decorators/
+│   │   │   ├── auth.decorator.ts
+│   │   │   └── auth.decorator.test.ts     # Unit test co-located
 │   │   ├── guards/
+│   │   │   ├── jwt.guard.ts
+│   │   │   └── jwt.guard.test.ts         # Unit test co-located
 │   │   └── interceptors/
+│   │       ├── logging.interceptor.ts
+│   │       └── logging.interceptor.test.ts # Unit test co-located
 │   └── main.ts
-├── tests/
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
+├── tests/                   # Centralized test directories
+│   ├── integration/         # Integration tests
+│   │   ├── user.integration.test.ts
+│   │   └── auth.integration.test.ts
+│   └── e2e/                 # E2E tests
+│       ├── user.e2e.test.ts
+│       └── auth.e2e.test.ts
 ├── Dockerfile
 └── package.json
 
@@ -123,35 +163,76 @@ frontend/
 ├── src/
 │   ├── atoms/               # Atomic Design - Atoms
 │   │   ├── Button/
+│   │   │   ├── Button.tsx
+│   │   │   └── Button.test.tsx            # Unit test co-located
 │   │   ├── Input/
+│   │   │   ├── Input.tsx
+│   │   │   └── Input.test.tsx             # Unit test co-located
 │   │   └── Typography/
+│   │       ├── Typography.tsx
+│   │       └── Typography.test.tsx        # Unit test co-located
 │   ├── molecules/           # Atomic Design - Molecules
 │   │   ├── SearchBox/
+│   │   │   ├── SearchBox.tsx
+│   │   │   └── SearchBox.test.tsx         # Unit test co-located
 │   │   ├── Card/
+│   │   │   ├── Card.tsx
+│   │   │   └── Card.test.tsx              # Unit test co-located
 │   │   └── FormField/
+│   │       ├── FormField.tsx
+│   │       └── FormField.test.tsx        # Unit test co-located
 │   ├── organisms/           # Atomic Design - Organisms
 │   │   ├── Header/
+│   │   │   ├── Header.tsx
+│   │   │   └── Header.test.tsx            # Unit test co-located
 │   │   ├── Navigation/
+│   │   │   ├── Navigation.tsx
+│   │   │   └── Navigation.test.tsx        # Unit test co-located
 │   │   └── DataTable/
+│   │       ├── DataTable.tsx
+│   │       └── DataTable.test.tsx         # Unit test co-located
 │   ├── templates/           # Atomic Design - Templates
 │   │   ├── MainLayout/
+│   │   │   ├── MainLayout.tsx
+│   │   │   └── MainLayout.test.tsx        # Unit test co-located
 │   │   └── AuthLayout/
+│   │       ├── AuthLayout.tsx
+│   │       └── AuthLayout.test.tsx        # Unit test co-located
 │   ├── pages/               # Atomic Design - Pages
 │   │   ├── HomePage/
+│   │   │   ├── HomePage.tsx
+│   │   │   └── HomePage.test.tsx          # Unit test co-located
 │   │   └── DashboardPage/
+│   │       ├── DashboardPage.tsx
+│   │       └── DashboardPage.test.tsx     # Unit test co-located
 │   ├── services/            # API communication
 │   │   ├── api/
+│   │   │   ├── user.api.ts
+│   │   │   └── user.api.test.ts           # Unit test co-located
 │   │   ├── hooks/
+│   │   │   ├── useUser.ts
+│   │   │   └── useUser.test.ts            # Unit test co-located
 │   │   └── cache/
+│   │       ├── queryClient.ts
+│   │       └── queryClient.test.ts        # Unit test co-located
 │   ├── shared/              # Shared utilities
 │   │   ├── utils/
+│   │   │   ├── formatters.ts
+│   │   │   └── formatters.test.ts         # Unit test co-located
 │   │   ├── constants/
+│   │   │   ├── api.constants.ts
+│   │   │   └── api.constants.test.ts      # Unit test co-located
 │   │   └── types/
+│   │       ├── user.types.ts
+│   │       └── user.types.test.ts         # Unit test co-located
 │   └── App.tsx
-├── tests/
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
+├── tests/                   # Centralized test directories
+│   ├── integration/         # Integration tests
+│   │   ├── api.integration.test.ts
+│   │   └── auth.integration.test.ts
+│   └── e2e/                 # E2E tests
+│       ├── user-flow.e2e.test.ts
+│       └── auth-flow.e2e.test.ts
 ├── Dockerfile
 └── package.json
 
@@ -160,7 +241,7 @@ docker-compose.yml
 README.md
 ```
 
-**Structure Decision**: Web application structure selected with Clean Architecture for backend and Atomic Design for frontend. Backend follows Domain/Application/Infrastructure/Presentation layers, while frontend uses Atomic Design hierarchy. Both services are containerized with Docker and orchestrated via Docker Compose.
+**Structure Decision**: Web application structure selected with Clean Architecture for backend and Atomic Design for frontend. Backend follows Domain/Application/Infrastructure/Presentation layers, while frontend uses Atomic Design hierarchy. Both services are containerized with Docker and orchestrated via Docker Compose. Test organization follows constitution requirements: unit tests are co-located with source files using .test.ts/.test.tsx naming convention, while E2E and integration tests are centralized in tests/ directories for better maintainability and discoverability.
 
 ## Complexity Tracking
 

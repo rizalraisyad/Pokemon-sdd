@@ -171,6 +171,25 @@
 - Contract tests for API compatibility
 - 90%+ code coverage requirement
 
+### Test File Organization
+
+**Decision**: Use co-location pattern for unit tests and centralized directories for E2E tests
+
+**Rationale**:
+- Unit tests co-located with source files improve maintainability and discoverability
+- Developers can easily find and update tests when modifying code
+- Reduces cognitive load by keeping related files together
+- E2E tests centralized in tests/e2e/ for comprehensive end-to-end testing
+- Integration tests in tests/integration/ for API and service integration testing
+- Consistent naming convention (.test.ts, .test.tsx) for easy identification
+- Mirrors source directory structure for E2E tests to maintain organization
+
+**Implementation**:
+- Backend: Unit tests next to each .ts file (user.service.ts → user.service.test.ts)
+- Frontend: Unit tests next to each .tsx file (Button.tsx → Button.test.tsx)
+- E2E tests: Centralized in tests/e2e/ with descriptive names
+- Integration tests: Centralized in tests/integration/ for API testing
+
 ## Monitoring & Observability Research
 
 **Decision**: Implement structured logging and health monitoring
