@@ -31,7 +31,29 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+**Architecture Compliance**:
+- [ ] Project structure follows Clean Architecture with Domain/Application/Infrastructure/Presentation layers
+- [ ] Files organized by domain modules (DDD principles)
+- [ ] Dependencies point inward toward domain layer
+- [ ] Configuration managed through centralized config service
+
+**Code Quality Gates**:
+- [ ] SOLID principles applied throughout design
+- [ ] DRY principle enforced - no code duplication
+- [ ] Single responsibility functions identified
+- [ ] Test strategy defined for all components
+
+**Security & Performance**:
+- [ ] Security measures planned for all API endpoints
+- [ ] Performance requirements defined (200ms simple requests, 2s complex)
+- [ ] Caching strategy identified where appropriate
+- [ ] Input validation and output sanitization planned
+
+**Development Standards**:
+- [ ] TDD approach defined for all functions
+- [ ] Test coverage target set (minimum 90%)
+- [ ] Code review process established
+- [ ] Static analysis and security scanning configured
 
 ## Project Structure
 

@@ -90,6 +90,17 @@
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
 
+### Architecture Requirements (Constitution Compliance)
+
+- **AR-001**: System MUST implement Clean Architecture with Domain/Application/Infrastructure/Presentation layers
+- **AR-002**: All files MUST be organized by domain modules following DDD principles
+- **AR-003**: All functions MUST follow SOLID and DRY principles
+- **AR-004**: Every function MUST have exactly one purpose and corresponding tests
+- **AR-005**: All configuration MUST be managed through centralized config service
+- **AR-006**: All API endpoints MUST implement security measures (auth, validation, sanitization)
+- **AR-007**: Simple requests MUST respond within 200ms, complex operations within 2 seconds
+- **AR-008**: Test coverage MUST be maintained above 90%
+
 *Example of marking unclear requirements:*
 
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]

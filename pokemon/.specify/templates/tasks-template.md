@@ -48,9 +48,11 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan
+- [ ] T001 Create Clean Architecture project structure per implementation plan
 - [ ] T002 Initialize [language] project with [framework] dependencies
 - [ ] T003 [P] Configure linting and formatting tools
+- [ ] T004 [P] Setup centralized configuration service module
+- [ ] T005 [P] Configure environment variable management
 
 ---
 
@@ -62,12 +64,14 @@ description: "Task list template for feature implementation"
 
 Examples of foundational tasks (adjust based on your project):
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T006 Setup database schema and migrations framework
+- [ ] T007 [P] Implement authentication/authorization framework
+- [ ] T008 [P] Setup API routing and middleware structure
+- [ ] T009 Create base domain models/entities following DDD principles
+- [ ] T010 Configure error handling and logging infrastructure
+- [ ] T011 [P] Setup security middleware (input validation, output sanitization)
+- [ ] T012 [P] Configure performance monitoring and caching framework
+- [ ] T013 Setup test framework with coverage reporting (target 90%+)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
