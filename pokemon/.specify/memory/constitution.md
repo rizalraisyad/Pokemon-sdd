@@ -1,9 +1,9 @@
 <!--
 Sync Impact Report:
-Version change: 0.0.0 → 1.0.0
-Modified principles: All principles replaced with new architecture-focused principles
-Added sections: Architecture Standards, Security Requirements, Performance Standards, Configuration Management
-Removed sections: None (template structure maintained)
+Version change: 1.0.0 → 1.1.0
+Modified principles: None (existing principles maintained)
+Added sections: API Contract Standards, Request Sanitization & Validation
+Removed sections: None
 Templates requiring updates: ⚠ pending - plan-template.md, spec-template.md, tasks-template.md
 Follow-up TODOs: None
 -->
@@ -33,6 +33,12 @@ Every function MUST have exactly one purpose and one reason to change. Functions
 ### VII. Test-Driven Development (MANDATORY)
 Every function MUST have corresponding tests. TDD cycle MUST be followed: Write test → Make it fail → Write implementation → Make it pass → Refactor. Test coverage MUST be maintained above 90%. Integration tests MUST be written for all API endpoints.
 
+### VIII. API Contract Standardization
+All APIs MUST follow consistent request/response format contracts. Every endpoint MUST have documented OpenAPI/Swagger specifications. Request and response schemas MUST be versioned and backward compatible. API contracts MUST be the single source of truth for client integration.
+
+### IX. Request Sanitization (MANDATORY)
+Every incoming request MUST be sanitized before processing. Input validation MUST reject malformed, malicious, or unexpected data. All user inputs MUST be escaped, trimmed, and validated against strict schemas. No raw user input MUST reach business logic without sanitization.
+
 ## Architecture Standards
 
 ### Module Organization
@@ -47,6 +53,14 @@ Every function MUST have corresponding tests. TDD cycle MUST be followed: Write 
 - Config service MUST be located in a dedicated config module
 - Environment-specific configurations MUST be clearly separated
 
+### API Contract Standards
+- All endpoints MUST use consistent JSON request/response format
+- Request schemas MUST include required fields, data types, and validation rules
+- Response schemas MUST include success/error status, data payload, and metadata
+- API versioning MUST be implemented via URL path (e.g., /api/v1/) or headers
+- OpenAPI/Swagger documentation MUST be auto-generated and kept up-to-date
+- Contract changes MUST maintain backward compatibility for at least one major version
+
 ## Security Requirements
 
 ### API Security
@@ -55,6 +69,16 @@ Every function MUST have corresponding tests. TDD cycle MUST be followed: Write 
 - Input validation MUST be comprehensive and strict
 - Output sanitization MUST prevent data leakage
 - Security headers MUST be properly configured
+
+### Request Sanitization & Validation
+- All incoming requests MUST be sanitized before any processing
+- Input validation MUST reject malformed JSON, SQL injection attempts, XSS payloads
+- String inputs MUST be trimmed, escaped, and length-limited
+- Numeric inputs MUST be validated for range and type constraints
+- File uploads MUST be validated for type, size, and content scanning
+- All user inputs MUST be validated against strict JSON schemas
+- Raw user input MUST NEVER reach business logic without sanitization
+- Sanitization errors MUST be logged and monitored for security threats
 
 ### Data Protection
 - Sensitive data MUST be encrypted at rest and in transit
@@ -99,4 +123,4 @@ This constitution supersedes all other development practices and guidelines. All
 
 All pull requests and code reviews MUST verify compliance with these principles. Complexity MUST be justified and documented. Any deviation from these principles requires explicit approval and documentation.
 
-**Version**: 1.0.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-27
+**Version**: 1.1.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-27

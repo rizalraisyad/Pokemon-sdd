@@ -101,6 +101,17 @@
 - **AR-007**: Simple requests MUST respond within 200ms, complex operations within 2 seconds
 - **AR-008**: Test coverage MUST be maintained above 90%
 
+### API Contract Requirements
+
+- **API-001**: All endpoints MUST use consistent JSON request/response format
+- **API-002**: Every endpoint MUST have OpenAPI/Swagger documentation
+- **API-003**: Request schemas MUST include validation rules and data types
+- **API-004**: Response schemas MUST include status, data payload, and metadata
+- **API-005**: API versioning MUST be implemented via URL path or headers
+- **API-006**: All incoming requests MUST be sanitized before processing
+- **API-007**: Input validation MUST reject malformed, malicious, or unexpected data
+- **API-008**: Contract changes MUST maintain backward compatibility
+
 *Example of marking unclear requirements:*
 
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]

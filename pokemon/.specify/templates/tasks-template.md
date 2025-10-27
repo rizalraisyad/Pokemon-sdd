@@ -72,6 +72,9 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T011 [P] Setup security middleware (input validation, output sanitization)
 - [ ] T012 [P] Configure performance monitoring and caching framework
 - [ ] T013 Setup test framework with coverage reporting (target 90%+)
+- [ ] T014 [P] Setup API contract validation and sanitization framework
+- [ ] T015 [P] Configure OpenAPI/Swagger documentation generation
+- [ ] T016 [P] Setup request sanitization pipeline (trimming, escaping, validation)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
