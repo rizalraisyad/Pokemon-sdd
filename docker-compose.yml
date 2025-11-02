@@ -1,0 +1,50 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pokemon-backend
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=${BACKEND_NODE_ENV:-development}
+      - PORT=${BACKEND_PORT:-3000}
+      - LOG_LEVEL=${BACKEND_LOG_LEVEL:-debug}
+      - API_VERSION=${BACKEND_API_VERSION:-v1}
+      - CORS_ORIGIN=${BACKEND_CORS_ORIGIN:-http://localhost:3001}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - pokemon-network
+    healthcheck:
+      test: "CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/v1/health || exit 1"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pokemon-frontend
+    ports:
+      - '3001:3001'
+    environment:
+      - VITE_API_URL=http://localhost:3000/api/v1
+      - VITE_NODE_ENV=${FRONTEND_NODE_ENV:-development}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - pokemon-network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  pokemon-network:
+    driver: bridge
+
