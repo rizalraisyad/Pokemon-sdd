@@ -1,0 +1,260 @@
+openapi: 3.0.3
+info:
+  title: Base Application API
+  description: API specification for the base application setup with NestJS backend
+  version: 1.0.0
+  contact:
+    name: Development Team
+    email: dev@pokemon-project.com
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development server
+  - url: https://api.pokemon-project.com/api/v1
+    description: Production server
+paths:
+  /health:
+    get:
+      summary: Health Check
+      description: Check the health status of the application
+      tags:
+        - Health
+      parameters:
+        - name: includeServices
+          in: query
+          description: Include dependent services status
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: timeout
+          in: query
+          description: Health check timeout in milliseconds
+          required: false
+          schema:
+            type: integer
+            minimum: 1000
+            maximum: 30000
+            default: 5000
+      responses:
+        '200':
+          description: Application is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        '503':
+          description: Application is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /config:
+    get:
+      summary: Get Application Configuration
+      description: Retrieve current application configuration
+      tags:
+        - Configuration
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Configuration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AppConfig'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update Application Configuration
+      description: Update application configuration
+      tags:
+        - Configuration
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigUpdateDto'
+      responses:
+        '200':
+          description: Configuration updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AppConfig'
+        '400':
+          description: Invalid configuration data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    HealthCheckResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - uptime
+        - version
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy, degraded]
+          description: Current health status
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp
+        uptime:
+          type: number
+          minimum: 0
+          description: Uptime in seconds
+        version:
+          type: string
+          pattern: '^v?\d+\.\d+\.\d+$'
+          description: Application version
+        services:
+          type: object
+          additionalProperties:
+            type: string
+            enum: [healthy, unhealthy, degraded]
+          description: Status of dependent services
+    AppConfig:
+      type: object
+      required:
+        - environment
+        - port
+        - corsOrigin
+        - logLevel
+        - apiVersion
+      properties:
+        environment:
+          type: string
+          enum: [development, staging, production]
+          description: Application environment
+        port:
+          type: integer
+          minimum: 1000
+          maximum: 65535
+          description: Service port
+        corsOrigin:
+          type: string
+          format: uri
+          description: Allowed CORS origins
+        logLevel:
+          type: string
+          enum: [debug, info, warn, error]
+          description: Logging level
+        apiVersion:
+          type: string
+          pattern: '^v?\d+$'
+          description: API version
+    ConfigUpdateDto:
+      type: object
+      properties:
+        logLevel:
+          type: string
+          enum: [debug, info, warn, error]
+          description: New logging level
+        corsOrigin:
+          type: string
+          format: uri
+          description: New CORS origin
+        apiVersion:
+          type: string
+          pattern: '^v?\d+$'
+          description: New API version
+    ApiResponse:
+      type: object
+      required:
+        - success
+        - data
+        - message
+        - timestamp
+        - requestId
+      properties:
+        success:
+          type: boolean
+          description: Operation success status
+        data:
+          type: object
+          description: Response payload
+        message:
+          type: string
+          minLength: 1
+          description: Human-readable message
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp
+        requestId:
+          type: string
+          format: uuid
+          description: Unique request identifier
+    ErrorResponse:
+      type: object
+      required:
+        - success
+        - error
+        - timestamp
+        - requestId
+      properties:
+        success:
+          type: boolean
+          enum: [false]
+          description: Always false for errors
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+              minLength: 1
+              description: Error code
+            message:
+              type: string
+              minLength: 1
+              description: Error message
+            details:
+              type: object
+              description: Additional error context
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp
+        requestId:
+          type: string
+          format: uuid
+          description: Unique request identifier
+tags:
+  - name: Health
+    description: Health check endpoints
+  - name: Configuration
+    description: Configuration management endpoints

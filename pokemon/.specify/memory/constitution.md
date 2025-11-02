@@ -1,8 +1,8 @@
 <!--
 Sync Impact Report:
-Version change: 1.1.0 → 1.2.0
+Version change: 1.2.0 → 1.3.0
 Modified principles: None (existing principles maintained)
-Added sections: Frontend Development Standards, Frontend Security, Frontend Performance Requirements
+Added sections: Testing Standards
 Removed sections: None
 Templates requiring updates: ⚠ pending - plan-template.md, spec-template.md, tasks-template.md
 Follow-up TODOs: None
@@ -51,6 +51,9 @@ Data fetching MUST be centralized in smaller, focused components that communicat
 ### XIII. Performance-First Frontend
 Frontend applications MUST load fast with optimized bundle sizes and lazy loading. Critical rendering path MUST be optimized for first contentful paint under 1.5 seconds. Images and assets MUST be optimized and served via CDN. State management MUST use intelligent caching to minimize API calls and improve user experience.
 
+### XIV. Test File Organization (MANDATORY)
+Unit tests MUST be placed closest to the files they test using co-location pattern. E2E tests MUST be organized in a centralized tests directory. Test files MUST follow consistent naming conventions and directory structure for maintainability and discoverability.
+
 ## Architecture Standards
 
 ### Module Organization
@@ -81,6 +84,15 @@ Frontend applications MUST load fast with optimized bundle sizes and lazy loadin
 - Data flow MUST be unidirectional from child components to parent components
 - Authentication MUST be handled via secure HTTP-only cookies
 - All frontend-backend communication MUST use HTTPS with proper security headers
+
+### Testing Standards
+- Unit tests MUST be co-located with source files using `.test.ts` or `.spec.ts` suffix
+- Unit test files MUST be placed in the same directory as the files they test
+- E2E tests MUST be organized in centralized `tests/e2e/` directory structure
+- Integration tests MUST be placed in `tests/integration/` directory
+- Test files MUST follow naming convention: `[filename].test.[ext]` for unit tests
+- Test directories MUST mirror source directory structure for E2E tests
+- All test files MUST be discoverable and maintainable through consistent organization
 
 ## Security Requirements
 
@@ -163,4 +175,4 @@ This constitution supersedes all other development practices and guidelines. All
 
 All pull requests and code reviews MUST verify compliance with these principles. Complexity MUST be justified and documented. Any deviation from these principles requires explicit approval and documentation.
 
-**Version**: 1.2.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-27
+**Version**: 1.3.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-27

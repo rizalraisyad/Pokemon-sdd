@@ -80,6 +80,9 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T019 [P] Setup secure authentication via HTTP-only cookies
 - [ ] T020 [P] Configure HTTPS and security headers for frontend-backend communication
 - [ ] T021 [P] Setup frontend performance monitoring and optimization tools
+- [ ] T022 [P] Setup unit test co-location structure (tests next to source files)
+- [ ] T023 [P] Setup E2E test directory structure (centralized tests/e2e/)
+- [ ] T024 [P] Configure test naming conventions and file organization
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 

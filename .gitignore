@@ -1,0 +1,25 @@
+# Node/TypeScript
+node_modules/
+dist/
+build/
+coverage/
+
+# Env files
+.env*
+
+# Logs
+*.log
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# Caches
+**/tmp/
+**/.cache/
+
+# Repeated folders
+**/build/
+**/dist/
+**/node_modules/

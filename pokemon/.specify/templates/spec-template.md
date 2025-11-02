@@ -123,6 +123,16 @@
 - **FE-007**: All frontend-backend communication MUST use HTTPS with proper security headers
 - **FE-008**: Frontend performance MUST meet Core Web Vitals (FCP <1.5s, LCP <2.5s, CLS <0.1, FID <100ms)
 
+### Test Organization Requirements
+
+- **TEST-001**: Unit tests MUST be co-located with source files using .test.ts or .spec.ts suffix
+- **TEST-002**: Unit test files MUST be placed in the same directory as the files they test
+- **TEST-003**: E2E tests MUST be organized in centralized tests/e2e/ directory structure
+- **TEST-004**: Integration tests MUST be placed in tests/integration/ directory
+- **TEST-005**: Test files MUST follow naming convention: [filename].test.[ext] for unit tests
+- **TEST-006**: Test directories MUST mirror source directory structure for E2E tests
+- **TEST-007**: All test files MUST be discoverable and maintainable through consistent organization
+
 *Example of marking unclear requirements:*
 
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
