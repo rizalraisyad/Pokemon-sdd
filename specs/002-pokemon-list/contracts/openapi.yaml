@@ -1,0 +1,301 @@
+openapi: 3.0.3
+info:
+  title: Pokemon List API
+  description: API specification for Pokemon list display feature with search, filter, and sort capabilities
+  version: 1.0.0
+  contact:
+    name: Development Team
+    email: dev@pokemon-project.com
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development server
+  - url: https://api.pokemon-project.com/api/v1
+    description: Production server
+paths:
+  /pokemon:
+    get:
+      summary: Get Pokemon List
+      description: Retrieve a paginated list of Pokemon with optional search, filter, and sort capabilities
+      tags:
+        - Pokemon
+      parameters:
+        - name: offset
+          in: query
+          description: Pagination offset (number of items to skip)
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: search
+          in: query
+          description: Search query to filter Pokemon by name (partial match, case-insensitive)
+          required: false
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 100
+        - name: abilities
+          in: query
+          description: Filter by ability names (comma-separated, OR logic - Pokemon with ANY ability)
+          required: false
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+            example: ["Overgrow", "Chlorophyll"]
+        - name: sortBy
+          in: query
+          description: Field to sort by
+          required: false
+          schema:
+            type: string
+            enum: [ability, name, id]
+            default: id
+        - name: sortDirection
+          in: query
+          description: Sort direction
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+      responses:
+        '200':
+          description: Successfully retrieved Pokemon list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonListResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /pokemon/{id}:
+    get:
+      summary: Get Pokemon by ID
+      description: Retrieve a single Pokemon by its ID
+      tags:
+        - Pokemon
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Pokemon ID
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Successfully retrieved Pokemon
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PokemonResponse'
+        '404':
+          description: Pokemon not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Invalid Pokemon ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    PokemonListResponse:
+      type: object
+      required:
+        - success
+        - data
+        - message
+        - timestamp
+        - requestId
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            pokemon:
+              type: array
+              items:
+                $ref: '#/components/schemas/PokemonResponse'
+            totalCount:
+              type: integer
+              description: Total number of Pokemon available
+              example: 1000
+            offset:
+              type: integer
+              description: Current pagination offset
+              example: 0
+            limit:
+              type: integer
+              description: Items per page
+              example: 20
+            hasMore:
+              type: boolean
+              description: Whether more items are available
+              example: true
+            nextOffset:
+              type: integer
+              nullable: true
+              description: Offset for next page
+              example: 20
+        message:
+          type: string
+          example: "Pokemon list retrieved successfully"
+        timestamp:
+          type: string
+          format: date-time
+        requestId:
+          type: string
+          format: uuid
+    PokemonResponse:
+      type: object
+      required:
+        - id
+        - name
+        - imageUrl
+        - types
+        - abilities
+      properties:
+        id:
+          type: integer
+          description: Pokemon ID
+          example: 1
+        name:
+          type: string
+          description: Pokemon name
+          example: "bulbasaur"
+        imageUrl:
+          type: string
+          format: uri
+          description: Pokemon image URL
+          example: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+        types:
+          type: array
+          items:
+            type: string
+          description: Pokemon types
+          example: ["grass", "poison"]
+        abilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/AbilityResponse'
+          description: Pokemon abilities
+        weight:
+          type: number
+          description: Pokemon weight in hectograms
+          example: 69
+        height:
+          type: number
+          description: Pokemon height in decimetres
+          example: 7
+    AbilityResponse:
+      type: object
+      required:
+        - name
+        - isHidden
+        - slot
+      properties:
+        name:
+          type: string
+          description: Ability name
+          example: "Overgrow"
+        isHidden:
+          type: boolean
+          description: Whether ability is hidden
+          example: false
+        slot:
+          type: integer
+          description: Ability slot position
+          example: 1
+          minimum: 1
+          maximum: 3
+    ApiResponse:
+      type: object
+      required:
+        - success
+        - data
+        - message
+        - timestamp
+        - requestId
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+          minLength: 1
+        timestamp:
+          type: string
+          format: date-time
+        requestId:
+          type: string
+          format: uuid
+    ErrorResponse:
+      type: object
+      required:
+        - success
+        - error
+        - timestamp
+        - requestId
+      properties:
+        success:
+          type: boolean
+          enum: [false]
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+              minLength: 1
+              example: "POKEMON_NOT_FOUND"
+            message:
+              type: string
+              minLength: 1
+              example: "Pokemon with ID 9999 not found"
+            details:
+              type: object
+              description: Additional error context
+        timestamp:
+          type: string
+          format: date-time
+        requestId:
+          type: string
+          format: uuid
+tags:
+  - name: Pokemon
+    description: Pokemon list and details endpoints
+

@@ -2,9 +2,13 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { AppConfigService } from './infrastructure/config/app.config';
+import { WinstonModule } from 'nest-winston';
+import { winstonLoggerConfig } from './infrastructure/logging/logger.config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: WinstonModule.createLogger(winstonLoggerConfig),
+  });
   const configService = app.get(AppConfigService);
 
   app.setGlobalPrefix(`api/${configService.getApiVersion()}`);
@@ -20,7 +24,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: configService.getCorsOrigin(),
+    origin: configService.getCorsOrigin() || '*',
     credentials: true,
   });
 
